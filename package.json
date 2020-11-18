@@ -21,8 +21,9 @@
     ]
   },
   "dependencies": {
-    "@riophae/vue-treeselect": "0.0.37",
     "@tinymce/tinymce-vue": "1.1.0",
+    "@riophae/vue-treeselect": "0.0.37",
+    "v-charts": "1.19.0",
     "axios": "0.18.0",
     "clipboard": "1.7.1",
     "connect": "3.6.6",
@@ -35,11 +36,10 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "screenfull": "3.3.3",
-    "v-charts": "1.19.0",
     "vue": "2.5.17",
     "vue-count-to": "1.0.13",
     "vue-i18n": "7.3.2",
-    "vue-router": "^3.0.1",
+    "vue-router": "3.0.1",
     "vuex": "3.0.1",
     "xlsx": "^0.11.16"
   },

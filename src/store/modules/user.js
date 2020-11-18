@@ -49,19 +49,15 @@ const user = {
 
   actions: {
     // 用户名登录
-    LoginByUsername({ commit }, loginForm) {
-      const appId = loginForm.appId.trim()
+    LoginByUsername({ commit }, userInfo) {
+      const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        loginByUsername(appId, loginForm.appSecret).then(response => {
+        loginByUsername(username, userInfo.password).then(response => {
           const token = response.data.data
           commit('SET_TOKEN', token)
           setToken(token)
           resolve()
         }).catch(error => {
-          console.log(error)
-          const token = error.data.data.accessToken
-          commit('SET_TOKEN', token)
-          setToken(token)
           reject(error)
         })
       })
@@ -69,25 +65,25 @@ const user = {
 
     // 获取用户信息
     GetUserInfo({ commit, state }) {
-      // return new Promise((resolve, reject) => {
-      //   getUserInfo(state.token).then(response => {
-      //     const data = response.data.data
+      return new Promise((resolve, reject) => {
+        getUserInfo(state.token).then(response => {
+          const data = response.data.data
 
-      //     if (data.perms && data.perms.length > 0) { // 验证返回的perms是否是一个非空数组
-      //       commit('SET_PERMS', data.perms)
-      //     } else {
-      //       reject('getInfo: perms must be a non-null array !')
-      //     }
-      commit('SET_PERMS', '*')
-      commit('SET_ROLES', '1525.55')
-      commit('SET_NAME', 'bilim')
-      commit('SET_AVATAR', 'wuian')
-      commit('SET_INTRODUCTION', '1')
-      //     resolve(response)
-      //   }).catch(error => {
-      //     reject(error)
-      //   })
-      // })
+          if (data.perms && data.perms.length > 0) { // 验证返回的perms是否是一个非空数组
+            commit('SET_PERMS', data.perms)
+          } else {
+            reject('getInfo: perms must be a non-null array !')
+          }
+
+          commit('SET_ROLES', data.roles)
+          commit('SET_NAME', data.name)
+          commit('SET_AVATAR', data.avatar)
+          commit('SET_INTRODUCTION', data.introduction)
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
     },
 
     // 第三方验证登录

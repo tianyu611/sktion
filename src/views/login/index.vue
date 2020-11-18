@@ -4,18 +4,18 @@
       <div class="title-container">
         <h3 class="title">管理员登录</h3>
       </div>
-      <el-form-item prop="appId">
+      <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="loginForm.appId" name="appId" type="text" auto-complete="on" placeholder="appId" />
+        <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="username" />
       </el-form-item>
 
-      <el-form-item prop="appSecret">
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input :type="passwordType" v-model="loginForm.appSecret" name="appSecret" auto-complete="on" placeholder="appSecret" @keyup.enter.native="handleLogin" />
+        <el-input :type="passwordType" v-model="loginForm.password" name="password" auto-complete="on" placeholder="password" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
@@ -57,13 +57,9 @@ export default {
       }
     }
     return {
-      // loginForm: {
-      //   username: 'admin123',
-      //   password: 'admin123'
-      // },
       loginForm: {
-        appId: 'fe6cf73691a2441ebb0cb2c56757da8c',
-        appSecret: '131065fd35e1d9e9210d02d95eb274d4'
+        username: 'admin123',
+        password: 'admin123'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -100,19 +96,14 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid && !this.loading) {
           this.loading = true
-
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(response => {
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
-            console.log(response.data.data.accessToken)
             this.$notify.error({
               title: '失败',
-              message: response.data.data.errmsg
+              message: response.data.errmsg
             })
-
             this.loading = false
           })
         } else {

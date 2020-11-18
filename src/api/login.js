@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 
-export function loginByUsername(appId, appSecret) {
+export function loginByUsername(username, password) {
   const data = {
-    appId,
-    appSecret
+    username,
+    password
   }
   return request({
-    url: '/platCompany/extapi/getAccessToken',
-    method: 'get',
-    params: { appId, appSecret }
+    url: '/auth/login',
+    method: 'post',
+    data
   })
 }
 
